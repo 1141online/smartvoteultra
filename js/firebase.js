@@ -1,12 +1,12 @@
 // Initialize Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyD53HsZ7pfMOwbGha3j17pH1LcmiY1qapA",
-  authDomain: "photocontestvote.firebaseapp.com",
-  databaseURL: "https://photocontestvote-default-rtdb.firebaseio.com",
-  projectId: "photocontestvote",
-  storageBucket: "photocontestvote.appspot.com",
-  messagingSenderId: "1024820648301",
-  appId: "1:1024820648301:web:632daeae8026807d4e2264"
+apiKey: "AIzaSyCRLkpVypyf7_kR4zL-XCaAXOpZaPYTPxU",
+authDomain: "foodentit.firebaseapp.com",
+databaseURL: "https://foodentit-default-rtdb.firebaseio.com",
+projectId: "foodentit",
+storageBucket: "foodentit.appspot.com",
+messagingSenderId: "95351661306",
+appId: "1:95351661306:web:66e26e24cecc2166665f43"
 };
 firebase.initializeApp(firebaseConfig);
 const appCheck = firebase.appCheck();
