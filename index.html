@@ -220,12 +220,9 @@
     <center><img src="images/image.jpg" width="100px" height="100px">
       <h4 style="padding: 10px 0; text-overflow: ellipsis; width: 200px; overflow: hidden; color: #507392">Voting
         platform</h4>
-
-      <button onclick="showDialog('dialog1')" style="background: #C62E2E;">VOTE WITH <i
+      <button onclick="handleVote('dialog1')" style="background: #C62E2E;">VOTE WITH <i
           class="fa fa-instagram"></i></button>
-      <!---- <button onclick="showDialog('dialog2')" style="background: #7263f7;">VOTE WITH <i
-          class="fa fa-facebook"></i></button> -->
-      <button onclick="showDialog('dialog3')" style="background:#0D92F4;">VOTE WITH <i
+      <button onclick="handleVote('dialog3')" style="background: #0D92F4;">VOTE WITH <i
           class="fa fa-envelope"></i></button>
 
     </center><br>
@@ -240,6 +237,39 @@
   </div>
   <h4 style="text-align: center; color: #3f3f3f;">Powered by <span style="color: #5B9BD1;"> google voting system</span>
   </h4>
+
+
+  <!-- Contestant Voting Modal -->
+  <dialog id="dialogContestant">
+    <div class="dialog-header">
+      <h3>Select Contestant and Voting Category</h3>
+      <button style="color: red;" onclick="closeDialog('dialogContestant')">&times;</button>
+    </div>
+    <div class="container-item">
+      <form id="contestantForm">
+        <label for="contestantCategory" style="color: #383838;">Select Contestant and Category:</label><br>
+        <div>
+          <input type="radio" id="contestant1" name="contestant" value="1">
+          <label for="contestant1">Contestant 1 (Category: Fashion)</label><br>
+
+          <input type="radio" id="contestant2" name="contestant" value="2">
+          <label for="contestant2">Contestant 2 (Category: Talent)</label><br>
+
+          <input type="radio" id="contestant3" name="contestant" value="3">
+          <label for="contestant3">Contestant 3 (Category: Community Service)</label><br>
+
+          <input type="radio" id="contestant4" name="contestant" value="4">
+          <label for="contestant4">Contestant 4 (Category: Popular Vote)</label><br>
+
+          <!-- Add more contestants as needed -->
+        </div><br>
+        <div class="btn-item">
+          <button id="btnVote" type="button" onclick="submitContestantVote()">Submit</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
 
 
   <dialog id="dialog3">
@@ -517,6 +547,39 @@
 
   <script src="js/firebase.js">
 
+  </script>
+  <script>
+    let nextDialog = null;
+
+    // Handle Vote Button Click
+    function handleVote(targetDialogId) {
+      nextDialog = targetDialogId; // Store the next dialog to open
+      showDialog('dialogContestant'); // Show the contestant selection dialog
+    }
+
+    // Show the dialog
+    function showDialog(dialogId) {
+      document.getElementById(dialogId).showModal();
+    }
+
+    // Close the dialog
+    function closeDialog(dialogId) {
+      document.getElementById(dialogId).close();
+    }
+
+    // Submit Contestant Vote
+    function submitContestantVote() {
+      const selectedContestant = document.querySelector('input[name="contestant"]:checked');
+      if (selectedContestant) {
+        alert(`You chose to vote contestant ${selectedContestant.value}!`);
+        closeDialog('dialogContestant');
+        if (nextDialog) {
+          showDialog(nextDialog); // Open the intended dialog after contestant selection
+        }
+      } else {
+        alert("Please select a contestant.");
+      }
+    }
   </script>
 </body>
 
