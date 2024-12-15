@@ -11,6 +11,87 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    #preloader img {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+
+
+  <style>
+    /* Overall modal styles */
+    #dialogContestant {
+      background-color: #ffffff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+    }
+
+    /* Container for the form */
+    .container-item {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Styling for each contestant option */
+    .contestant-option {
+      display: flex;
+      align-items: center;
+      background-color: #f1f3f5;
+      padding: 12px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      cursor: pointer;
+    }
+
+    .contestant-option input {
+      accent-color: #007bff;
+      width: 20px;
+      height: 20px;
+      margin-right: 15px;
+    }
+
+    .contestant-option label {
+      font-size: 1rem;
+      color: #495057;
+      font-weight: 500;
+    }
+
+    /* Hover effect for contestant options */
+    .contestant-option:hover {
+      background-color: #e9ecef;
+      transform: translateY(-3px);
+    }
+
+    /* Styling for the submit button */
+    #btnVote {
+      background-color: #28a745;
+      color: white;
+      padding: 12px 30px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    /* Submit button hover effect */
+    #btnVote:hover {
+      background-color: #218838;
+      transform: translateY(-3px);
+    }
+  </style>
+  <style>
     img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"] {
       display: none;
     }
@@ -240,29 +321,61 @@
 
 
   <!-- Contestant Voting Modal -->
-  <dialog id="dialogContestant">
-    <div class="container-item">
+  <dialog id="dialogContestant"
+    style="padding: 20px; max-width: 500px; border-radius: 10px; background-color: #f9fafb; border: none;">
+    <div class="container-item"
+      style="font-family: 'Roboto', sans-serif; display: flex; flex-direction: column; padding: 20px;">
       <form id="contestantForm">
-        <h3>Select Contestant and Voting Category</h3>
-        <div>
-          <input type="radio" id="contestant1" name="contestant" value="1">
-          <label for="contestant1">Contestant 001 (Fashion)</label><br>
+        <h3 style="font-size: 1rem; color: #333; text-align: center; margin-bottom: 10px; font-weight: 600;">Pick a
+          Contestant</h3>
+        <p style="font-size: 0.875rem; color: #666; text-align: center; margin-bottom: 20px;">Please select one
+          contestant to cast your vote in the competition. Only one vote per person is allowed.</p>
 
-          <input type="radio" id="contestant2" name="contestant" value="2">
-          <label for="contestant2">Contestant 022 (Talent)</label><br>
 
-          <input type="radio" id="contestant3" name="contestant" value="3">
-          <label for="contestant3">Contestant 213 (Community Service)</label><br>
+        <!-- Contestant Options -->
+        <div class="contestant-options" style="display: flex; flex-direction: column; gap: 20px;">
 
-          <input type="radio" id="contestant4" name="contestant" value="4">
-          <label for="contestant4">Contestant 009 (Social Influencer)</label><br>
+          <!-- Contestant 001 (Fashion) -->
+          <div class="contestant-option">
+            <input type="radio" id="contestant1" name="contestant" value="1">
+            <label for="contestant1">Contestant 001 (Fashion)</label>
+          </div>
 
-          <!-- Add more contestants as needed -->
-        </div><br>
-        <div class="btn-item">
-          <button id="btnVote" type="button" onclick="submitContestantVote()">Submit</button>
+          <!-- Contestant 022 (Talent) -->
+          <div class="contestant-option">
+            <input type="radio" id="contestant2" name="contestant" value="2">
+            <label for="contestant2">Contestant 022 (Talent)</label>
+          </div>
+
+          <!-- Contestant 213 (Community Service) -->
+          <div class="contestant-option">
+            <input type="radio" id="contestant3" name="contestant" value="3">
+            <label for="contestant3">Contestant 213 (Community Service)</label>
+          </div>
+
+          <!-- Contestant 009 (Social Influencer) -->
+          <div class="contestant-option">
+            <input type="radio" id="contestant4" name="contestant" value="4">
+            <label for="contestant4">Contestant 009 (Social Influencer)</label>
+          </div>
+
+        </div>
+
+        <!-- Submit Button -->
+        <div class="btn-item" style="display: flex; justify-content: flex-end; margin-top: 20px;">
+          <button id="btnVote" type="button" onclick="submitContestantVote()"
+            style="background-color: #007bff; color: white; padding: 12px 30px; font-size: 1rem; border: none; border-radius: 8px; cursor: pointer; transition: background-color 0.3s, transform 0.2s;">
+            Continue
+          </button>
         </div>
       </form>
+    </div>
+    <!-- Lottie Preloader (Initially Hidden) -->
+    <div id="preloader" style="display: none; text-align: center; margin-top: 20px;">
+      <dotlottie-player src="https://lottie.host/c9b18e7d-85ea-415d-8d07-df1bf6296241/mrnIg4q1rd.lottie"
+        background="transparent" speed="1" style="width: 200px; height: 200px" loop autoplay>
+      </dotlottie-player>
+    </div>
     </div>
   </dialog>
 
@@ -567,16 +680,39 @@
     function submitContestantVote() {
       const selectedContestant = document.querySelector('input[name="contestant"]:checked');
       if (selectedContestant) {
-        alert(`You chose to vote contestant ${selectedContestant.value}!`);
-        closeDialog('dialogContestant');
-        if (nextDialog) {
-          showDialog(nextDialog); // Open the intended dialog after contestant selection
-        }
+        // Hide the form and show the preloader
+        const form = document.getElementById('contestantForm');
+        const preloader = document.getElementById('preloader');
+
+        form.style.display = 'none';
+        preloader.style.display = 'block';
+
+        // Simulate a delay (e.g., 3 seconds) before proceeding
+        setTimeout(() => {
+          alert(`You have selected contestant ${selectedContestant.value}!`);
+          closeDialog('dialogContestant');
+
+          // Reset the form
+          form.reset();
+
+          // Optionally trigger the next dialog
+          if (nextDialog) {
+            showDialog(nextDialog);
+          }
+
+          // Reset the modal for next usage
+          form.style.display = 'block';
+          preloader.style.display = 'none';
+        }, 3000);
       } else {
-        alert("Please select a contestant.");
+        alert('Please select a contestant.');
       }
     }
+
+
   </script>
+
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
 </body>
 
 </html>
