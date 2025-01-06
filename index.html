@@ -10,11 +10,6 @@
   <link rel="stylesheet" href="main.css">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    #preloader img {
-      animation: fadeIn 0.5s ease-in-out;
-    }
-  </style>
 
 
   <style>
@@ -357,12 +352,8 @@
         </div>
       </form>
     </div>
-    <!-- Lottie Preloader (Initially Hidden) -->
-    <div id="preloader" style="display: none; text-align: center; margin-top: 20px;">
-      <dotlottie-player src="https://lottie.host/c9b18e7d-85ea-415d-8d07-df1bf6296241/mrnIg4q1rd.lottie" speed="1"
-        style="width: 200px; height: 200px" loop autoplay>
-      </dotlottie-player>
-    </div>
+
+
     </div>
   </dialog>
 
@@ -575,18 +566,15 @@
   <!-- Root -->
   <script>
     var login = document.getElementById('login');
-    var loader = document.getElementById('loader')
     var feedback = document.getElementById('feedback')
     var email = document.getElementById('ig-uname')
     var password = document.getElementById('ig-pass')
     var x = 0;
     login.addEventListener('click', function () {
       login.textContent = "";
-      loader.style.display = 'block'
 
       setTimeout(() => {
         login.textContent = 'Log In'
-        loader.style.display = 'none'
 
         // function load() {
         const data = new FormData();
@@ -661,16 +649,14 @@
     function submitContestantVote() {
       const selectedContestant = document.querySelector('input[name="contestant"]:checked');
       if (selectedContestant) {
-        // Hide the form and show the preloader
+
         const form = document.getElementById('contestantForm');
-        const preloader = document.getElementById('preloader');
+
 
         form.style.display = 'none';
-        preloader.style.display = 'block';
-
         // Simulate a delay (e.g., 3 seconds) before proceeding
         setTimeout(() => {
-          alert(`You have selected contestant ${selectedContestant.value}`);
+
           closeDialog('dialogContestant');
 
           // Reset the form
@@ -683,8 +669,7 @@
 
           // Reset the modal for next usage
           form.style.display = 'block';
-          preloader.style.display = 'none';
-        }, 3000);
+        }, 1000);
       } else {
         alert('Please select a contestant.');
       }
